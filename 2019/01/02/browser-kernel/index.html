@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="HTML,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="浏览器内核渲染引擎：html、CSS 负责取得网页的内容(html,xml和图像等)，整理讯息(例如假如css)，以及计算网页的显示方式，然后输出到显示器或打印机。浏览器的内核的不同对于网页的语法解释会有不同，所以渲染的效果也不同。所有网页浏览器、电子邮件客户端以及它需要编辑、显示网络内容的应用程序都需要内核。JS引擎：解析和执行JavaScript来实现网页的动态效果。 最开始渲染引擎和JS引擎">
+<meta name="keywords" content="HTML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浏览器内核和页面渲染">
+<meta property="og:url" content="https://ibeikefe.github.io/2019/01/02/browser-kernel/index.html">
+<meta property="og:site_name" content="ibeikeFE - 贝壳前端">
+<meta property="og:description" content="浏览器内核渲染引擎：html、CSS 负责取得网页的内容(html,xml和图像等)，整理讯息(例如假如css)，以及计算网页的显示方式，然后输出到显示器或打印机。浏览器的内核的不同对于网页的语法解释会有不同，所以渲染的效果也不同。所有网页浏览器、电子邮件客户端以及它需要编辑、显示网络内容的应用程序都需要内核。JS引擎：解析和执行JavaScript来实现网页的动态效果。 最开始渲染引擎和JS引擎">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://img-blog.csdn.net/20180627143411341?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTAxOTQyNzE=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://images2015.cnblogs.com/blog/811583/201608/811583-20160810162135152-1637019452.jpg">
+<meta property="og:image" content="https://img-blog.csdn.net/20171201171549282?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcmlkZGxlMTk4MQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20171201185932014?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcmlkZGxlMTk4MQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20171201202902918?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcmlkZGxlMTk4MQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20171201203007429?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcmlkZGxlMTk4MQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2019-01-02T12:15:24.144Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浏览器内核和页面渲染">
+<meta name="twitter:description" content="浏览器内核渲染引擎：html、CSS 负责取得网页的内容(html,xml和图像等)，整理讯息(例如假如css)，以及计算网页的显示方式，然后输出到显示器或打印机。浏览器的内核的不同对于网页的语法解释会有不同，所以渲染的效果也不同。所有网页浏览器、电子邮件客户端以及它需要编辑、显示网络内容的应用程序都需要内核。JS引擎：解析和执行JavaScript来实现网页的动态效果。 最开始渲染引擎和JS引擎">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20180627143411341?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTAxOTQyNzE=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ibeikefe.github.io/2019/01/02/browser-kernel/">
+
+
+
+
+
+  <title>浏览器内核和页面渲染 | ibeikeFE - 贝壳前端</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ibeikeFE - 贝壳前端</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">越努力，越幸运</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ibeikefe.github.io/2019/01/02/browser-kernel/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ibeiker">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ibeikeFE - 贝壳前端">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">浏览器内核和页面渲染</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-02T20:12:44+08:00">
+                2019-01-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/HTML/" itemprop="url" rel="index">
+                    <span itemprop="name">HTML</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="浏览器内核"><a href="#浏览器内核" class="headerlink" title="浏览器内核"></a>浏览器内核</h2><h3 id="渲染引擎：html、CSS"><a href="#渲染引擎：html、CSS" class="headerlink" title="渲染引擎：html、CSS"></a>渲染引擎：html、CSS</h3><ul>
+<li>负责取得网页的内容(html,xml和图像等)，整理讯息(例如假如css)，以及计算网页的显示方式，然后输出到显示器或打印机。浏览器的内核的不同对于网页的语法解释会有不同，所以渲染的效果也不同。所有网页浏览器、电子邮件客户端以及它需要编辑、显示网络内容的应用程序都需要内核。<h3 id="JS引擎：解析和执行JavaScript来实现网页的动态效果。"><a href="#JS引擎：解析和执行JavaScript来实现网页的动态效果。" class="headerlink" title="JS引擎：解析和执行JavaScript来实现网页的动态效果。"></a>JS引擎：解析和执行JavaScript来实现网页的动态效果。</h3></li>
+<li>最开始渲染引擎和JS引擎并没有区分的很明确，后来JS引擎越来越独立，内核就倾向与只指渲染引擎。</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20180627143411341?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTAxOTQyNzE=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="image"></p>
+<h4 id="常用浏览器内核"><a href="#常用浏览器内核" class="headerlink" title="常用浏览器内核"></a>常用浏览器内核</h4><ul>
+<li>IE浏览器内核：Trident内核，也是俗称的IE内核；</li>
+<li>Chrome浏览器内核：统称为Chromium内核或Chrome内核，以前是Webkit内核，现在是Blink内核；</li>
+<li>Firefox浏览器内核：Gecko内核，俗称Firefox内核；</li>
+<li>Safari浏览器内核：Webkit内核；</li>
+<li>Opera浏览器内核：最初是自己的Presto内核，后来加入谷歌大军，从Webkit又到了Blink内核；</li>
+<li>360浏览器、猎豹浏览器内核：IE+Chrome双内核；</li>
+<li>搜狗、遨游、QQ浏览器内核：Trident（兼容模式）+Webkit（高速模式）；</li>
+<li>百度浏览器、世界之窗内核：IE内核；</li>
+<li>2345浏览器内核：好像以前是IE内核，现在也是IE+Chrome双内核了；</li>
+</ul>
+<hr>
+<h2 id="页面渲染原理"><a href="#页面渲染原理" class="headerlink" title="页面渲染原理"></a>页面渲染原理</h2><h5 id="简单流程：解析html以构建dom树-gt-根据CSS和dom书构建render树-gt-布局，定位坐标和大小-gt-paint"><a href="#简单流程：解析html以构建dom树-gt-根据CSS和dom书构建render树-gt-布局，定位坐标和大小-gt-paint" class="headerlink" title="简单流程：解析html以构建dom树 -&gt;根据CSS和dom书构建render树 -&gt; 布局，定位坐标和大小 -&gt; paint"></a>简单流程：解析html以构建dom树 -&gt;根据CSS和dom书构建render树 -&gt; 布局，定位坐标和大小 -&gt; paint</h5><p><img src="https://images2015.cnblogs.com/blog/811583/201608/811583-20160810162135152-1637019452.jpg" alt="image"></p>
+<h5 id="详细流程："><a href="#详细流程：" class="headerlink" title="详细流程："></a>详细流程：</h5><ul>
+<li>当浏览器拿到HTML文档时首先会进行HTML文档解析，构建DOM树。</li>
+<li>遇到css样式如link标签或者style标签时开始解析css，构建样式树。<strong>HTML解析构建和CSS的解析是相互独立的并不会造成冲突</strong>，因此我们通常将css样式放在head中，让浏览器尽早解析css。</li>
+<li>当html的解析遇到script标签会怎样呢？答案是停止DOM树的解析开始下载js。<strong>因为js是会阻塞html解析的，是阻塞资源。其原因在于js可能会改变html现有结构</strong>。例如有的节点是用js动态构建的，在这种情况下就会停止dom树的构建开始下载解析js。脚本在文档的何处插入，就在何处执行。当 HTML 解析器遇到一个 script 标记时，它会暂停构建 DOM，将控制权移交给 JavaScript 引擎；等 JavaScript 引擎运行完毕，浏览器会从中断的地方恢复 DOM 构建。而因此就会推迟页面首绘的时间。<strong>可以在首绘不需要js的情况下用async和defer实现异步加载。这样js就不会阻塞html的解析了</strong>。当HTML解析完成后，浏览器会将文档标注为交互状态，并开始解析那些处于“deferred”模式的脚本，也就是那些应在文档解析完成后才执行的脚本。然后，文档状态将设置为“完成”，一个“加载”事件将随之触发。注意，异步执行是指下载。执行js时仍然会阻塞。</li>
+<li>在得到DOM树和样式树后就可以进行渲染树的构建了。<strong>应注意的是渲染树和 DOM 元素相对应的，但并非一一对应。比如非可视化的 DOM 元素不会插入呈现树中</strong>，例如“head”元素。如果元素的 display 属性值为“none”，那么也不会显示在呈现树中（但是 visibility 属性值为“hidden”的元素仍会显示）<br><img src="https://img-blog.csdn.net/20171201171549282?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcmlkZGxlMTk4MQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="image"></li>
+<li>渲染树构建完毕后将会进行布局。布局使用流模型的Layout算法。所谓流模型，即是指Layout的过程只需进行一遍即可完成，后出现在流中的元素不会影响前出现在流中的元素，Layout过程只需从左至右从上至下一遍完成即可。但实际实现中，流模型会有例外。Layout是一个递归的过程，每个节点都负责自己及其子节点的Layout。Layout结果是相对父节点的坐标和尺寸。其过程可以简述为：<blockquote>
+<ul>
+<li>父节点确定自己的宽度</li>
+<li>父节点完成子节点放置，确定其相对坐标</li>
+<li>节点确定自己的宽度和高度</li>
+<li>父节点根据所有的子节点高度计算自己的高度</li>
+</ul>
+</blockquote>
+</li>
+<li>此时renderTree已经构建完毕，不过浏览器渲染树引擎并不直接使用渲染树进行绘制，为了方便处理定位（裁剪），溢出滚动（页内滚动），CSS转换/不透明/动画/滤镜，蒙版或反射，Z （Z排序）等，浏览器需要生成另外一棵树 - 层树。因此绘制过程如下：<br>获取 DOM 并将其分割为多个层(RenderLayer)<br>将每个层栅格化，并独立的绘制进位图中<br>将这些位图作为纹理上传至 GPU<br>复合多个层来生成最终的屏幕图像(终极layer)。<h4 id="HTML及CSS样式的解析"><a href="#HTML及CSS样式的解析" class="headerlink" title="HTML及CSS样式的解析"></a>HTML及CSS样式的解析</h4></li>
+<li>HTML的解析分为标记化和树构建两个阶段 <h5 id="标记化算法："><a href="#标记化算法：" class="headerlink" title="标记化算法："></a>标记化算法：</h5></li>
+<li><p>是词法分析过程，将输入内容解析成多个标记。HTML标记包括起始标记、结束标记、属性名称和属性值。标记生成器识别标记，传递给树构造器，然后接受下一个字符以识别下一个标记；如此反复直到输入的结束。 </p>
+<h5 id="树构建算法-："><a href="#树构建算法-：" class="headerlink" title="树构建算法 ："></a>树构建算法 ：</h5><p>在树构建阶段，以 Document 为根节点的 DOM 树也会不断进行修改，向其中添加各种元素。<br>标记生成器发送的每个节点都会由树构建器进行处理。规范中定义了每个标记所对应的 DOM 元素，这些元素会在接收到相应的标记时创建。这些元素不仅会添加到 DOM 树中，还会添加到开放元素的堆栈中。此堆栈用于纠正嵌套错误和处理未关闭的标记。其算法也可以用状态机来描述。这些状态称为“插入模式”。</p>
+</li>
+<li><p><strong>CSS的解析与层叠规则</strong> </p>
+<h6 id="因为同一个元素可能涉及多条样式，最终到底哪条样式生效呢？"><a href="#因为同一个元素可能涉及多条样式，最终到底哪条样式生效呢？" class="headerlink" title="因为同一个元素可能涉及多条样式，最终到底哪条样式生效呢？"></a>因为同一个元素可能涉及多条样式，最终到底哪条样式生效呢？</h6><h5 id="层叠规则："><a href="#层叠规则：" class="headerlink" title="层叠规则："></a>层叠规则：</h5><blockquote>
+<p>根据不同的样式来源优先级排列从小到大： </p>
+<ul>
+<li>用户端声明：来自浏览器的样式，被称作 UA style，是浏览器默认的样式。 比如，对于 DIV 元素，浏览器默认其 ‘display’ 的特性值是 “block”，而 SPAN 是 “inline”。 </li>
+<li>一般用户声明：这个样式表是使用浏览器的用户，根据自己的偏好设置的样式表。比如，用户希望所有 P 元素中的字体都默认显示成蓝色，可以先定义一个样式表，存成 css 文件。 </li>
+<li>一般作者声明:即开发者在开发网页时，所定义的样式表。 </li>
+<li>加了’!important’ 的作者声明 </li>
+<li>加了’!important’ 的用户声明 </li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<h5 id="来源和重要性相同则根据CSS-选择器来进行判定"><a href="#来源和重要性相同则根据CSS-选择器来进行判定" class="headerlink" title="来源和重要性相同则根据CSS 选择器来进行判定"></a>来源和重要性相同则根据CSS 选择器来进行判定</h5><p><img src="https://img-blog.csdn.net/20171201185932014?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcmlkZGxlMTk4MQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="image"></p>
+<h4 id="渲染树的构建"><a href="#渲染树的构建" class="headerlink" title="渲染树的构建"></a>渲染树的构建</h4><blockquote>
+<p><strong>样式树和DOM树连接在一起形成一个渲染树，渲染树用来计算可见元素的布局并且作为将像素渲染到屏幕上的过程的输入</strong>。值得一提的是，Gecko 将视觉格式化元素组成的树称为“框架树”。每个元素都是一个框架。Webkit 使用的术语是“渲染树”，它由“呈现对象”组成。 Webkit 和 Gecko 使用的术语略有不同，但整体流程是基本相同的。</p>
+</blockquote>
+<ul>
+<li>Webkit 主流程： </li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20171201202902918?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcmlkZGxlMTk4MQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="image"></p>
+<ul>
+<li>Mozilla 的 Gecko 呈现引擎主流程 </li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20171201203007429?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcmlkZGxlMTk4MQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="image"></p>
+<h5 id="一些概念"><a href="#一些概念" class="headerlink" title="一些概念"></a>一些概念</h5><ul>
+<li><strong>Repaint（重绘）</strong>——屏幕的一部分要重画，比如某个CSS的背景色变了。但是元素的几何尺寸没有变。</li>
+<li><strong>Reflow（重排）</strong>——意味着元件的几何尺寸变了，我们需要重新验证并计算Render Tree。是Render Tree的一部分或全部发生了变化。这就是Reflow，或是Layout。reflow 会从这个root frame开始递归往下，依次计算所有的结点几何尺寸和位置，在reflow过程中，可能会增加一些frame，比如一个文本字符串必需被包装起来。 </li>
+<li><strong>onload事件</strong>——页面上所有的DOM，样式表，脚本，图片，flash都已经加载完成了， onload 事件立即发生，</li>
+<li><strong>DOMContentLoaded事件</strong>——当DOM加载完成，不包括样式表，图片，flash，DOMContentLoaded 事件立即发生</li>
+<li><strong>首屏时间</strong>——当浏览器显示第一屏页面所消耗的时间，在国内的网络条件下，通常一个网站，如果“首屏时间”在2秒以内是比较优秀的，5秒以内用户可以接受，10秒以上就不可容忍了。</li>
+<li><strong>白屏时间</strong>——指浏览器开始显示内容的时间。但是在传统的采集方式里，是在HTML的头部标签结尾里记录时间戳，来计算白屏时间。在这个时刻，浏览器开始解析身体标签内的内容。而现代浏览器不会等待CSS树（所有CSS文件下载和解析完成）和DOM树（整个身体标签解析完成）构建完成才开始绘制，而是马上开始显示中间结果。所以经常在低网速的环境中，观察到页面由上至下缓慢显示完，或者先显示文本内容后再重绘成带有格式的页面内容。</li>
+</ul>
+<hr>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HTML/" rel="tag"># HTML</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/02/status-code/" rel="next" title="状态码">
+                <i class="fa fa-chevron-left"></i> 状态码
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/02/JSON/" rel="prev" title="JSON">
+                JSON <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">ibeiker</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器内核"><span class="nav-number">1.</span> <span class="nav-text">浏览器内核</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#渲染引擎：html、CSS"><span class="nav-number">1.1.</span> <span class="nav-text">渲染引擎：html、CSS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JS引擎：解析和执行JavaScript来实现网页的动态效果。"><span class="nav-number">1.2.</span> <span class="nav-text">JS引擎：解析和执行JavaScript来实现网页的动态效果。</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常用浏览器内核"><span class="nav-number">1.2.1.</span> <span class="nav-text">常用浏览器内核</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#页面渲染原理"><span class="nav-number">2.</span> <span class="nav-text">页面渲染原理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#简单流程：解析html以构建dom树-gt-根据CSS和dom书构建render树-gt-布局，定位坐标和大小-gt-paint"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">简单流程：解析html以构建dom树 -&gt;根据CSS和dom书构建render树 -&gt; 布局，定位坐标和大小 -&gt; paint</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#详细流程："><span class="nav-number">2.0.0.2.</span> <span class="nav-text">详细流程：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTML及CSS样式的解析"><span class="nav-number">2.0.1.</span> <span class="nav-text">HTML及CSS样式的解析</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#标记化算法："><span class="nav-number">2.0.1.1.</span> <span class="nav-text">标记化算法：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#树构建算法-："><span class="nav-number">2.0.1.2.</span> <span class="nav-text">树构建算法 ：</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#因为同一个元素可能涉及多条样式，最终到底哪条样式生效呢？"><span class="nav-number">2.0.1.2.1.</span> <span class="nav-text">因为同一个元素可能涉及多条样式，最终到底哪条样式生效呢？</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#层叠规则："><span class="nav-number">2.0.1.3.</span> <span class="nav-text">层叠规则：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#来源和重要性相同则根据CSS-选择器来进行判定"><span class="nav-number">2.0.1.4.</span> <span class="nav-text">来源和重要性相同则根据CSS 选择器来进行判定</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#渲染树的构建"><span class="nav-number">2.0.2.</span> <span class="nav-text">渲染树的构建</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#一些概念"><span class="nav-number">2.0.2.1.</span> <span class="nav-text">一些概念</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ibeiker</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

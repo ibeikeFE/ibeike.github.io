@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JS,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、JSONJSON简介JSON（JavaScript Object Notation），即JavaScript对象表示法，是存储和交换文本信息的语法，是轻量级的文本数据交换格式。JSON类似于XML，但比XML更小、更快、更易解析。 JSON独立于语言。==JSON使用Javascript语法来描述数据对象==，但是JSON仍然独立于语言和平台。JSON解析器和JSON库支持许多不同的编程语言。">
+<meta name="keywords" content="JS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JSON">
+<meta property="og:url" content="https://ibeikefe.github.io/2019/01/02/JSON/index.html">
+<meta property="og:site_name" content="ibeikeFE - 贝壳前端">
+<meta property="og:description" content="一、JSONJSON简介JSON（JavaScript Object Notation），即JavaScript对象表示法，是存储和交换文本信息的语法，是轻量级的文本数据交换格式。JSON类似于XML，但比XML更小、更快、更易解析。 JSON独立于语言。==JSON使用Javascript语法来描述数据对象==，但是JSON仍然独立于语言和平台。JSON解析器和JSON库支持许多不同的编程语言。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-01-02T12:17:46.824Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JSON">
+<meta name="twitter:description" content="一、JSONJSON简介JSON（JavaScript Object Notation），即JavaScript对象表示法，是存储和交换文本信息的语法，是轻量级的文本数据交换格式。JSON类似于XML，但比XML更小、更快、更易解析。 JSON独立于语言。==JSON使用Javascript语法来描述数据对象==，但是JSON仍然独立于语言和平台。JSON解析器和JSON库支持许多不同的编程语言。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ibeikefe.github.io/2019/01/02/JSON/">
+
+
+
+
+
+  <title>JSON | ibeikeFE - 贝壳前端</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ibeikeFE - 贝壳前端</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">越努力，越幸运</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ibeikefe.github.io/2019/01/02/JSON/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ibeiker">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ibeikeFE - 贝壳前端">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JSON</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-02T20:17:09+08:00">
+                2019-01-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/JS/" itemprop="url" rel="index">
+                    <span itemprop="name">JS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一、JSON"><a href="#一、JSON" class="headerlink" title="一、JSON"></a>一、JSON</h2><h4 id="JSON简介"><a href="#JSON简介" class="headerlink" title="JSON简介"></a>JSON简介</h4><p>JSON（JavaScript Object Notation），即JavaScript对象表示法，是存储和交换文本信息的语法，是轻量级的文本数据交换格式。JSON类似于XML，但比XML更小、更快、更易解析。</p>
+<p>JSON独立于语言。==JSON使用Javascript语法来描述数据对象==，但是JSON仍然独立于语言和平台。JSON解析器和JSON库支持许多不同的编程语言。目前非常多的动态（PHP、JSP、.NET等）编程语言都支持JSON。JSON具有自我描述性，更易理解。</p>
+<p>看一个JSON实例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;sites&quot;: [</span><br><span class="line">    &#123;&quot;name&quot;: &quot;baidu&quot;, &quot;url&quot;: &quot;www.baidu.com&quot;&#125;,</span><br><span class="line">    &#123;&quot;name&quot;: &quot;google&quot;, &quot;url&quot;: &quot;www.google.com&quot;&#125;,</span><br><span class="line">    &#123;&quot;name&quot;: &quot;weibo&quot;, &quot;url&quot;: &quot;www.weibo.com&quot;&#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>JSON文本格式在语法上与创建JavaScript对象的代码相同。正是==由于这种相似性，<strong>无需解析器</strong>，JavaScript程序能够使用内建的eval()函数，用JSON数据来生成原生的JavaScript对象==。</p>
+<h4 id="JSON语法"><a href="#JSON语法" class="headerlink" title="JSON语法"></a>JSON语法</h4><p>JSON==语法==是JavaScript对象表示语法的子集：</p>
+<ul>
+<li>数据在名称/值对中；</li>
+<li>数据由逗号分隔；</li>
+<li>大括号保存对象，中括号保存数组。</li>
+</ul>
+<h5 id="1-JSON名称-值对"><a href="#1-JSON名称-值对" class="headerlink" title="1. JSON名称/值对"></a>1. JSON名称/值对</h5><p>JSON数据的书写格式是“名称/值对”，包含字段名称（在双引号中），后面写一个冒号，然后是值，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;name&quot;: &quot;ZhangSan&quot;</span><br></pre></td></tr></table></figure>
+<p>等价于JavaScript语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">name = &quot;ZhangSan&quot;</span><br></pre></td></tr></table></figure>
+<h5 id="2-值"><a href="#2-值" class="headerlink" title="2. 值"></a>2. 值</h5><p>值可以是：数字（整数或浮点数）、字符串（在双引号中）、逻辑值（true或false）、数组（在中括号中）、对象（在大括号中）、null，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;name&quot;: &quot;LiSi&quot;,</span><br><span class="line">    &quot;age&quot;: 24,</span><br><span class="line">    &quot;info&quot;: &#123;&quot;qq&quot;: &quot;88888888&quot;, &quot;wechat&quot;: &quot;66666666&quot;&#125;,</span><br><span class="line">    &quot;color&quot;: [red, blue, yellow, green],</span><br><span class="line">    &quot;flag&quot;: true,</span><br><span class="line">    &quot;note&quot;: null</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到，JSON使用JavaScript语法，实际上JSON本身就是一个JavaScript对象，可以使用JavaScript的语法来读取JSON的内容。</p>
+<h4 id="JSON对象"><a href="#JSON对象" class="headerlink" title="JSON对象"></a>JSON对象</h4><p>JSON对象使用在大括号<code>{}</code>中书写。对象可以包含多个key/value（键/值）对，key必须是字符串，value可以是合法的JSON数据类型（字符串、数字、对象、数组、布尔值或null）。key和value中使用冒号<code>:</code>分割，每个key/value对使用逗号<code>,</code>分割，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;name&quot;: &quot;WangWu&quot;, &quot;age&quot;: 26&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="1-访问对象值"><a href="#1-访问对象值" class="headerlink" title="1. 访问对象值"></a>1. 访问对象值</h5><p>（1）使用<code>.</code>来访问对象的值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var jsonObj = &#123;&quot;name&quot;: &quot;WangWu&quot;, &quot;age&quot;: 26&#125;;</span><br><span class="line">var x = jsonObj.name;    // WangWu</span><br></pre></td></tr></table></figure>
+<p>（2）使用<code>[]</code>来访问对象的值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var jsonObj = &#123;&quot;name&quot;: &quot;WangWu&quot;, &quot;age&quot;: 26&#125;;</span><br><span class="line">var x = jsonObj[&quot;name&quot;];    // WangWu</span><br></pre></td></tr></table></figure>
+<h5 id="2-遍历对象"><a href="#2-遍历对象" class="headerlink" title="2. 遍历对象"></a>2. 遍历对象</h5><p>（1）使用<code>for-in</code>来遍历对象的属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var jsonObj = &#123;&quot;name&quot;: &quot;WangWu&quot;, &quot;age&quot;: 26&#125;;</span><br><span class="line">for (x in jsonObj) &#123;</span><br><span class="line">    document.getElementById(&quot;demo&quot;).innerHTML += x+&quot;&lt;br/&gt;&quot;;</span><br><span class="line">&#125;</span><br><span class="line">// name</span><br><span class="line">// age</span><br></pre></td></tr></table></figure>
+<p>（2）在使用<code>for-in</code>遍历对象的属性时，使用<code>[]</code>来访问属性的值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var jsonObj = &#123;&quot;name&quot;: &quot;WangWu&quot;, &quot;age&quot;: 26&#125;;</span><br><span class="line">for (x in jsonObj) &#123;</span><br><span class="line">    document.getElementById(&quot;demo&quot;).innerHTML += jsonObj[x]+&quot;&lt;br/&gt;&quot;;</span><br><span class="line">&#125;</span><br><span class="line">// WangWu</span><br><span class="line">// 26</span><br></pre></td></tr></table></figure>
+<h5 id="3-嵌套JSON对象"><a href="#3-嵌套JSON对象" class="headerlink" title="3. 嵌套JSON对象"></a>3. 嵌套JSON对象</h5><p>JSON对象中可以包含另外一个JSON对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var jsonObj = &#123;</span><br><span class="line">    &quot;name&quot;: &quot;MaLiu&quot;,</span><br><span class="line">    &quot;age&quot;: 28,</span><br><span class="line">    &quot;info&quot;: &#123;</span><br><span class="line">        &quot;qq&quot;: &quot;88888888&quot;,</span><br><span class="line">        &quot;wechat&quot;: &quot;66666666&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以使用<code>.</code>或<code>[]</code>来访问嵌套的JSON对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = jsonObj.info.wechat;</span><br><span class="line">x = jsonObj.info[&quot;wechat&quot;];</span><br></pre></td></tr></table></figure>
+<h5 id="4-修改JSON对象的值"><a href="#4-修改JSON对象的值" class="headerlink" title="4. 修改JSON对象的值"></a>4. 修改JSON对象的值</h5><p>同样可以通过访问JSON对象来修改其值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jsonObj.info.wechat = &quot;99999999&quot;;</span><br><span class="line">jsonObj.info[&quot;wechat&quot;] = &quot;11111111&quot;;</span><br></pre></td></tr></table></figure>
+<h5 id="5-删除JSON对象的属性"><a href="#5-删除JSON对象的属性" class="headerlink" title="5. 删除JSON对象的属性"></a>5. 删除JSON对象的属性</h5><p>也可以通过访问JSON对象来删除某个属性，要使用<code>delete</code>关键字：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">delete jsonObj.info.wechat;</span><br><span class="line">delete jsonObj.info[&quot;qq&quot;];</span><br></pre></td></tr></table></figure>
+<p>对JSON数组的操作同对JSON对象的操作，这里就不做详细举例了。</p>
+<blockquote>
+<p>JSON通常用于与服务端交换数据，在JSON数据和JavaScript对象之间相互转换就需要JSON.parse()和JSON.stringify()两个函数。</p>
+</blockquote>
+<h4 id="JSON-parse"><a href="#JSON-parse" class="headerlink" title="JSON.parse()"></a>JSON.parse()</h4><p>在接收服务器数据时一般是以字符串的形式。可以==使用JSON.parse()方法将数据转换为JavaScript对象==。</p>
+<p><strong>语法</strong>：<code>JSON.parse(text[, reviver]);</code></p>
+<p><strong>参数说明</strong>：</p>
+<ul>
+<li>text：必需，一个有效的JSON字符串；</li>
+<li>reviver：可选，一个转换结果的函数，将为对象的每个成员调用此函数。</li>
+</ul>
+<p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var text = &apos;&#123;&quot;name&quot;: &quot;ZhangSan&quot;, &quot;age&quot;: 20&#125;&apos;;</span><br><span class="line">var obj = JSON.parse(text);</span><br><span class="line">document.getElementById(&quot;demo&quot;).innerHTML = &quot;name: &quot; + obj.name;</span><br></pre></td></tr></table></figure>
+<p>注意，==JSON不能存储Date对象==，如果需要存储Date对象，需要先将其转换为字符串，之后可再将字符串转换为Date对象，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var text = &apos;&#123;&quot;name&quot;: &quot;ZhangSan&quot;, &quot;bd&quot;: &quot;2000-01-01&quot;&#125;&apos;;</span><br><span class="line">var obj = JSON.parse(text);</span><br><span class="line">obj.bd = new Date(obj.bd);</span><br></pre></td></tr></table></figure>
+<p>此时，JSON.parse()的第二个参数reviver就能派上用场了，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var text = &apos;&#123;&quot;name&quot;: &quot;ZhangSan&quot;, &quot;bd&quot;: &quot;2000-01-01&quot;&#125;&apos;;</span><br><span class="line">var obj = JSON.parse(text, function(key, value) &#123;</span><br><span class="line">    if (key == &quot;bd&quot;) &#123;</span><br><span class="line">        return new Date(value);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        return value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>还要注意的是，==JSON不允许包含函数==，同样可以将函数作为字符串存储，之后再将字符串转换为函数即可，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var text = &apos;&#123;&quot;name&quot;: &quot;ZhangSan&quot;, &quot;func&quot;: &quot;function() &#123;return 100;&#125;&quot;&#125;&apos;;</span><br><span class="line">var obj = JSON.parse(text);</span><br><span class="line">obj.func = eval(&quot;(&quot; + obj.func + &quot;)&quot;);</span><br></pre></td></tr></table></figure>
+<p>虽然在JSON中可以存储函数，但是不建议这么做。在浏览器支持方面，主流的浏览器都支持JSON.parse()函数。</p>
+<h4 id="JSON-stringify"><a href="#JSON-stringify" class="headerlink" title="JSON.stringify()"></a>JSON.stringify()</h4><p>在向服务器发送数据时一般是字符串。可以==使用JSON.stringify()方法将JavaScript对象转换为字符串==。</p>
+<p><strong>语法</strong>：<code>JSON.stringify(value[, replacer[, space]]);</code></p>
+<p><strong>参数说明</strong>：</p>
+<ul>
+<li>value：必需，一个有效的JSON对象；</li>
+<li>replacer：可选，用于转换结果的函数或数组。<br>如果replacer为函数，则JSON.stringify()将调用该函数，并传入每个成员的键和值。使用返回值而不是原始值。如果此函数返回undefined，则排除成员。根对象的键是一个空字符串：””。<br>如果replacer是一个数组，则仅转换该数组中具有键值的成员。成员的转换顺序与键在数组中的顺序一样。当value参数也为数组时，将忽略replacer数组。</li>
+<li>space：可选，文本添加缩进、空格和换行符，如果space是一个数字，则返回值文本在每个级别缩进指定数目的空格，如果space大于10，则文本缩进10个空格。space也可以使用非数字，如：\t。</li>
+</ul>
+<p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123;&quot;name&quot;: &quot;LiSi&quot;, &quot;age&quot;: 20&#125;;</span><br><span class="line">var jsonObj1 = JSON.stringify(obj);</span><br><span class="line"></span><br><span class="line">var arr = [&quot;apple&quot;, &quot;orange&quot;];</span><br><span class="line">var jsonObj2 = JSON.stringify(arr);</span><br></pre></td></tr></table></figure>
+<p>使用JSON.stringify()方法可以将JavaScript对象、数组转换为JSON字符串，上述例子中jsonObj1、jsonObj2均为字符串。</p>
+<p>注意，==JSON不能存储Date对象==，JSON.stringify()会将所有日期转换为字符串，之后也可以再将字符串转换为Date对象。如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123;&quot;name&quot;: &quot;LiSi&quot;, &quot;bd&quot;: &quot;new Date()&quot;&#125;;</span><br><span class="line">var jsonObj = JSON.stringify(obj);</span><br><span class="line">document.getElementById(&quot;demo&quot;).innerHTML = jsonObj;</span><br><span class="line">//</span><br><span class="line">// &#123;&quot;name&quot;:&quot;LiSi&quot;,&quot;bd&quot;:&quot;2018-12-13T09:03:12.721Z&quot;&#125;</span><br></pre></td></tr></table></figure>
+<p>同样的，==JSON不允许包含函数==，JSON.stringify()方法将会删除JavaScript对象中的函数，包括key和value。如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123;&quot;name&quot;: &quot;LiSi&quot;, &quot;func&quot;: function() &#123;return 100;&#125;&#125;;</span><br><span class="line">var jsonObj = JSON.stringify(obj);</span><br><span class="line">document.getElementById(&quot;demo&quot;).innerHTML = jsonObj;</span><br><span class="line">// &#123;&quot;name&quot;:&quot;LiSi&quot;&#125;</span><br></pre></td></tr></table></figure>
+<p>可以在执行JSON.stringify()方法前将函数转换为字符串来避免以上的问题：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123;&quot;name&quot;: &quot;LiSi&quot;, &quot;func&quot;: function() &#123;return 100;&#125;&#125;;</span><br><span class="line">obj.func = obj.func.toString();</span><br><span class="line">var jsonObj = JSON.stringify(obj);</span><br><span class="line">document.getElementById(&quot;demo&quot;).innerHTML = jsonObj;</span><br><span class="line">// &#123;&quot;name&quot;:&quot;LiSi&quot;,&quot;func&quot;:&quot;function() &#123;return 100;&#125;&quot;&#125;</span><br></pre></td></tr></table></figure>
+<p>同样，虽然在JSON中可以存储函数，但是不建议这么做。在浏览器支持方面，主流的浏览器都支持JSON.stringify()函数。</p>
+<h4 id="eval"><a href="#eval" class="headerlink" title="eval()"></a>eval()</h4><p>==将JSON文本转换为JavaScript对象==还可以使用eval()方法。eval()方法==使用的是JavaScript编译器==，由于JSON语法是JavaScript语法的子集，eval()方法可解析JSON文本，然后生成JavaScript对象。需要注意的是，必须把文本包围在括号中，这样才能避免语法错误，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var obj = eval(&quot;(&quot; + text + &quot;)&quot;);</span><br></pre></td></tr></table></figure>
+<p>JSON.parse()方法和eval()方法都能将JSON转换为JavaScript对象，这二者有什么==区别==吗？</p>
+<p>在使用上，eval()方法要用一对圆括号将字符串包起来。如果不这么做会有什么后果，看下面这个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alert(eval(&quot;&#123;&#125;&quot;));              // undefined</span><br><span class="line">alert(eval(&quot;(&quot;+ &quot;&#123;&#125;&quot; +&quot;)&quot;));    // object[Object]</span><br></pre></td></tr></table></figure>
+<p>可以看到，==解析对象{}时，如若不加外层的括号，那么eval()方法将会把大括号识别为JavaScript代码块的开始和结束标记，那么{}将会被认为是执行了一句空语句==；而加了外层的括号即可使eval()方法在处理JavaScript代码的时候强制将括号内的表达式转化为对象，而不是作为语句来执行。</p>
+<p>==在JSON.parse()方法中可以使用reviver参数对要解析的字符串进行格式检查==，如果格式不正确则不进行解析，而eval()方法则可以解析任何字符串，并且eval()方法可编译并执行任何JavaScript代码，这就是使用eval()方法潜在的安全问题：如果恶意用户在JSON中注入了向页面插入木马链接的脚本，用eval()方法也是可以操作的，而用JSON.parse()则不必担心这个问题，==JSON解析器只能识别JSON文本，而不会编译脚本==。</p>
+<blockquote>
+<p>各主流浏览器都提供了原生的JSON支持，而且JSON解析器的速度更快，以及最新的ECMAScript (JavaScript) 标准中也包含了原生的对JSON的支持。</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JS/" rel="tag"># JS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/02/browser-kernel/" rel="next" title="浏览器内核和页面渲染">
+                <i class="fa fa-chevron-left"></i> 浏览器内核和页面渲染
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/02/JS-JQUERY-event/" rel="prev" title="JS&JQUERY 事件">
+                JS&JQUERY 事件 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">ibeiker</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、JSON"><span class="nav-number">1.</span> <span class="nav-text">一、JSON</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JSON简介"><span class="nav-number">1.0.1.</span> <span class="nav-text">JSON简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSON语法"><span class="nav-number">1.0.2.</span> <span class="nav-text">JSON语法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-JSON名称-值对"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">1. JSON名称/值对</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-值"><span class="nav-number">1.0.2.2.</span> <span class="nav-text">2. 值</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSON对象"><span class="nav-number">1.0.3.</span> <span class="nav-text">JSON对象</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-访问对象值"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">1. 访问对象值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-遍历对象"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">2. 遍历对象</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-嵌套JSON对象"><span class="nav-number">1.0.3.3.</span> <span class="nav-text">3. 嵌套JSON对象</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-修改JSON对象的值"><span class="nav-number">1.0.3.4.</span> <span class="nav-text">4. 修改JSON对象的值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-删除JSON对象的属性"><span class="nav-number">1.0.3.5.</span> <span class="nav-text">5. 删除JSON对象的属性</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSON-parse"><span class="nav-number">1.0.4.</span> <span class="nav-text">JSON.parse()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSON-stringify"><span class="nav-number">1.0.5.</span> <span class="nav-text">JSON.stringify()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#eval"><span class="nav-number">1.0.6.</span> <span class="nav-text">eval()</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ibeiker</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
